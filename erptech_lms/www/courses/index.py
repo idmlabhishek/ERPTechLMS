@@ -10,7 +10,6 @@ from lms.lms.utils import (
 )
 from lms.overrides.user import get_enrolled_courses, get_authored_courses
 
-
 def get_context(context):
 	context.no_cache = 1
 	context.live_courses, context.upcoming_courses = get_courses()
@@ -46,10 +45,6 @@ def get_courses():
 		filters={"published": True},
 		fields=[
 			"name",
-			"custom_manufacturer",
-			"custom_wholeseller",
-			"custom_retail",
-			"custom_services",
 			"upcoming",
 			"title",
 			"short_introduction",
@@ -64,16 +59,17 @@ def get_courses():
 	live_courses, upcoming_courses = [], []
 	for course in courses:
 		course.enrollment_count = frappe.db.count(
-			"LMS Batch Membership", {"course": course.name, "member_type": "Student"}
+			"LMS Enrollment", {"course": course.name, "member_type": "Student"}
 		)
 		course.avg_rating = get_average_rating(course.name) or 0
 		if course.upcoming:
 			upcoming_courses.append(course)
 		else:
 			live_courses.append(course)
-	
+
 	live_courses.sort(key=lambda x: x.enrollment_count, reverse=True)
 	upcoming_courses.sort(key=lambda x: x.enrollment_count, reverse=True)
+
 	return live_courses, upcoming_courses
 
 def get_courses_filter(filter):
@@ -99,9 +95,6 @@ def get_courses_filter(filter):
 
 	filter_courses = []
 	for course in courses:
-		course.enrollment_count = frappe.db.count(
-			"LMS Batch Membership", {"course": course.name, "member_type": "Student"}
-		)
 		course.avg_rating = get_average_rating(course.name) or 0
 		filter_courses.append(course)
 	

@@ -62,8 +62,6 @@ def sign_up(email, full_name, signup_phone, verify_terms,exact_business, signup_
 		return 2, _("Please ask your administrator to verify your sign-up")
 
 
-
-
 def set_country_from_ip(login_manager=None, user=None):
 	if not user and login_manager:
 		user = login_manager.user
@@ -72,8 +70,6 @@ def set_country_from_ip(login_manager=None, user=None):
 	#    return
 	frappe.db.set_value("User", user, "country", get_country_code())
 	return
-
-
 
 def get_country_code():
 	ip = frappe.local.request_ip

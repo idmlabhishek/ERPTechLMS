@@ -22,7 +22,7 @@
             <label class="form-label sr-only"> {{ _("Business Type") }} </label>
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
-                    <select type="text" id="user_types" data-fieldname="user_types" style="color: var(--text-muted)"
+                    <select type="text" id="user_types" data-fieldname="user_types"
                         class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
                         <option value=""> {{ _("Business Type") }} </option>
                         <option value="Advisor/Consultant"> {{ _("Advisor/Consultant") }} </option>
@@ -45,7 +45,7 @@
             <label class="form-label sr-only"> {{ _("Your Yearly sales (Aapki Salaana Sales)") }} </label>
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
-                    <select type="text" id="yearly_sales" data-fieldname="yearly_sales" style="color: var(--text-muted)"
+                    <select type="text" id="yearly_sales" data-fieldname="yearly_sales"
                         class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
                         <option value=""> {{ _("Your Yearly sales (Aapki Salaana Sales)") }} </option>
                         <option value="Less than 15 Lakhs"> {{ _("Less than 15 Lakhs")}} </option>
@@ -69,7 +69,7 @@
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
                     <select type="text" id="user_experience" data-fieldname="user_experience"
-                        style="color: var(--text-muted)" class="input-with-feedback form-control ellipsis"
+                         class="input-with-feedback form-control ellipsis"
                         data-fieldtype="Select" required>
                         <option value=""> {{ _("Aapka business experience?") }} </option>
                         <option value="Ek student hu"> {{ _("Ek student hu")}} </option>
@@ -95,7 +95,7 @@
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
                     <select type="text" id="user_category" data-fieldname="user_category"
-                        style="color: var(--text-muted)" class="input-with-feedback form-control ellipsis"
+                        class="input-with-feedback form-control ellipsis"
                         data-fieldtype="Select" required>
                         <option value=""> {{ _("Category") }} </option>
                         <option value="Business Owner"> {{ _("Business Owner") }} </option>
@@ -127,7 +127,6 @@
     </div>
     <div class="page-card-actions">
         <button class="btn btn-sm btn-primary btn-block btn-signup" type="submit">{{ _("Sign up") }}</button>
-
         <p class="text-center sign-up-message">
             <a href="#login" class="blue">{{ _("Have an account? Login") }}</a>
         </p>
@@ -136,19 +135,20 @@
 
 <script>
     frappe.ready(function () {
-        $("#user_category").on("change", (e) => {
-            style_category(e);
-        });
-
+        $("#full_name").css("color", "#000");
+        $("#email").css("color", "#000");
+        $("#signup_phone").css("color", "#000");
+        $("#user_types").css("color", "#000");
+        $("#yearly_sales").css("color", "#000");
+        $("#signup_employees").css("color", "#000");
+        $("#verify_terms").css("color", "#000");
+        $("#user_category").css("color", "#000");
+        $("#user_experience").css("color", "#000");
+        $("#exact_business").css("color", "#000");
         $(".signup-form").on("submit", (e) => {
             signup(e);
         });
     });
-
-    const style_category = (e) => {
-        let category_color = $(e.currentTarget).val() ? "var(--text-color)" : "var(--text-muted)";
-        $("#user_category").css("color", category_color);
-    }
 
     const signup = (e) => {
         e.preventDefault();
