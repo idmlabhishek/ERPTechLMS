@@ -214,3 +214,6 @@ app_license = "MIT"
 # auth_hooks = [
 #	"erptech_lms.auth.validate"
 # ]
+
+
+signup_form_template = "erptech_lms.plugins.show_custom_signup"

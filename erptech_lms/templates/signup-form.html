@@ -1,0 +1,184 @@
+<form class="signup-form" role="form">
+    <div class="page-card-body">
+        <div class="form-group">
+            <h5>{{ _("Register now to get access to Free Resources!") }}</h5>
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_fullname"> {{ _("Full Name") }} </label>
+            <input type="text" id="signup_fullname" class="form-control" placeholder="{{ _('Your Name') }}" required
+                autofocus>
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_email"> {{ _("Email") }} </label>
+            <input type="email" id="signup_email" class="form-control" placeholder="{{ _('Your Email') }}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_phone"> {{ _("Phone") }} </label>
+            <input type="number" id="signup_phone" class="form-control"
+                placeholder="{{ _('Phone number without country code (ex. 9299343394)') }}" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label sr-only"> {{ _("Business Type") }} </label>
+            <div class="control-input-wrapper">
+                <div class="control-input flex align-center">
+                    <select type="text" id="user_types" data-fieldname="user_types" style="color: var(--text-muted)"
+                        class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
+                        <option value=""> {{ _("Business Type") }} </option>
+                        <option value="Advisor/Consultant"> {{ _("Advisor/Consultant") }} </option>
+                        <option value="Professionals(CA, Doctor, Architect, Lawyer etc)"> {{ _("Professionals(CA,
+                            Doctor, Architect, Lawyer etc)")}} </option>
+                        <option value="Service Provider"> {{ _("Service Provider") }} </option>
+                        <option value="Brand Owner"> {{ _("Brand Owner") }} </option>
+                        <option value="Distributor/wholesaler/Trader/Dealer"> {{
+                            _("Distributor/wholesaler/Trader/Dealer") }} </option>
+                        <option value="Network Marketing"> {{ _("Network Marketing") }} </option>
+                        <option value="Retailer"> {{ _("Retailer") }} </option>
+                        <option value="Manufacturer"> {{ _("Manufacturer") }} </option>
+                        <option value="Network Marketing"> {{ _("Others") }} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label sr-only"> {{ _("Your Yearly sales (Aapki Salaana Sales)") }} </label>
+            <div class="control-input-wrapper">
+                <div class="control-input flex align-center">
+                    <select type="text" id="yearly_sales" data-fieldname="yearly_sales" style="color: var(--text-muted)"
+                        class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
+                        <option value=""> {{ _("Your Yearly sales (Aapki Salaana Sales)") }} </option>
+                        <option value="Less than 15 Lakhs"> {{ _("Less than 15 Lakhs")}} </option>
+                        <option value="15-25 Lakhs"> {{ _("15-25 Lakhs") }} </option>
+                        <option value="50 Lakhs"> {{ _("50 Lakhs") }} </option>
+                        <option value="50 Lakhs-1Cr"> {{ _("50 Lakhs-1Cr") }} </option>
+                        <option value="More than 1Cr"> {{ _("More than 1Cr") }} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_employees"> {{ _("Number of Employees") }} </label>
+            <input type="text" id="signup_employees" class="form-control" placeholder="{{ _('Number of Employees') }}"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label sr-only"> {{ _("Aapka business experience?") }} </label>
+            <div class="control-input-wrapper">
+                <div class="control-input flex align-center">
+                    <select type="text" id="user_experience" data-fieldname="user_experience"
+                        style="color: var(--text-muted)" class="input-with-feedback form-control ellipsis"
+                        data-fieldtype="Select" required>
+                        <option value=""> {{ _("Aapka business experience?") }} </option>
+                        <option value="Ek student hu"> {{ _("Ek student hu")}} </option>
+                        <option value="Abhi tak koyi business nahi hai, start karna chahta hu"> {{ _("Abhi tak koyi
+                            business nahi hai, start karna chahta hu") }} </option>
+                        <option value="Pehle se business kar raha hu"> {{ _("Pehle se business kar raha hu") }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label sr-only" for="exact_business"> {{ _("Exact Business") }} </label>
+            <input type="text" id="exact_business" class="form-control"
+                placeholder="{{ _('Exact Business (e.g. Garment Mfg, Garment wholesaler, Garment Retailer etc)') }}"
+                required>
+        </div>
+
+        {% if frappe.db.get_single_value("LMS Settings", "user_category") %}
+        <div class="form-group">
+            <label class="form-label sr-only"> {{ _("User Category") }} </label>
+            <div class="control-input-wrapper">
+                <div class="control-input flex align-center">
+                    <select type="text" id="user_category" data-fieldname="user_category"
+                        style="color: var(--text-muted)" class="input-with-feedback form-control ellipsis"
+                        data-fieldtype="Select" required>
+                        <option value=""> {{ _("Category") }} </option>
+                        <option value="Business Owner"> {{ _("Business Owner") }} </option>
+                        <option value="Manager (Sales/Marketing/Customer)"> {{ _("Manager (Sales/Marketing/Customer)")
+                            }} </option>
+                        <option value="Employee"> {{ _("Employee") }} </option>
+                        <option value="Student"> {{ _("Student") }} </option>
+                        <option value="Freelancer/Just looking"> {{ _("Freelancer/Just looking") }} </option>
+                        <option value="Others"> {{ _("Others") }} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <span class="input-area">
+                        <input type="checkbox" autocomplete="off" class="input-with-feedback" data-fieldtype="Check"
+                            data-fieldname="terms" id="signup-terms" required>
+                    </span>
+                    <span class="label-area">
+                        {{ _("I have read and agree to your {0}").format(get_signup_optin_checks()) }}
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="page-card-actions">
+        <button class="btn btn-sm btn-primary btn-block btn-signup" type="submit">{{ _("Sign up") }}</button>
+
+        <p class="text-center sign-up-message">
+            <a href="#login" class="blue">{{ _("Have an account? Login") }}</a>
+        </p>
+    </div>
+</form>
+
+<script>
+    frappe.ready(function () {
+        $("#user_category").on("change", (e) => {
+            style_category(e);
+        });
+
+        $(".signup-form").on("submit", (e) => {
+            signup(e);
+        });
+    });
+
+    const style_category = (e) => {
+        let category_color = $(e.currentTarget).val() ? "var(--text-color)" : "var(--text-muted)";
+        $("#user_category").css("color", category_color);
+    }
+
+    const signup = (e) => {
+        e.preventDefault();
+        const full_name = frappe.utils.xss_sanitise(($("#signup_fullname").val() || "").trim());
+        const email = ($("#signup_email").val() || "").trim();
+        const signup_phone = frappe.utils.xss_sanitise(($("#signup_phone").val() || "").trim());
+        const signup_employees = frappe.utils.xss_sanitise(($("#signup_employees").val() || "").trim());
+        const exact_business = frappe.utils.xss_sanitise(($("#exact_business").val() || "").trim());
+
+        if (!email || !validate_email(email) || !full_name) {
+            login.set_status('{{ _("Valid email and name required") }}', 'red');
+            return false;
+        }
+
+        frappe.call({
+            method: "erptech_lms.api.sign_up",
+            args: {
+                "full_name": full_name,
+                "email": email,
+                "signup_phone": signup_phone,
+                "user_types": $("#user_types").length ? $("#user_types").val() : "",
+                "yearly_sales": $("#yearly_sales").length ? $("#yearly_sales").val() : "",
+                "signup_employees": signup_employees,
+                "verify_terms": $("#signup-terms").prop("checked") ? 1 : 0,
+                "user_category": $("#user_category").length ? $("#user_category").val() : "",
+                "user_experience": $("#user_experience").length ? $("#user_experience").val() : "",
+                "exact_business": exact_business,
+            },
+            statusCode: login.login_handlers
+        })
+        return false;
+    }
+</script>
