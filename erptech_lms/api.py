@@ -7,7 +7,7 @@ from frappe.website.utils import is_signup_disabled
 from lms.lms.utils import get_chapters, can_create_courses
 
 @frappe.whitelist(allow_guest=True)
-def sign_up(email, full_name, signup_phone, verify_terms,exact_business, signup_employees, user_category, user_types, yearly_sales, user_experience):
+def sign_up(email, full_name, signup_phone, verify_terms, exact_business, signup_employees, user_types, yearly_sales, user_experience, new_password):
 	if is_signup_disabled():
 		frappe.throw(_("Sign Up is disabled"), _("Not Allowed"))
 
@@ -37,12 +37,12 @@ def sign_up(email, full_name, signup_phone, verify_terms,exact_business, signup_
 			"user_experience": user_experience,
 			"exact_business": exact_business,
 			"verify_terms": verify_terms,
-			"user_category": user_category,
 			"user_types": user_types,
 			"yearly_sales": yearly_sales,
 			"country": "",
 			"enabled": 1,
-			"new_password": random_string(10),
+			# "new_password": random_string(10),
+			"new_password": new_password,
 			"user_type": "Website User",
 		}
 	)
@@ -56,10 +56,11 @@ def sign_up(email, full_name, signup_phone, verify_terms,exact_business, signup_
 	if default_role:
 		user.add_roles(default_role)
 
-	if user.flags.email_sent:
-		return 1, _("Please check your email for verification")
-	else:
-		return 2, _("Please ask your administrator to verify your sign-up")
+	return 1, _("Registered successfully")
+	# if user.flags.email_sent:
+	# 	return 1, _("Please check your email for verification")
+	# else:
+	# 	return 2, _("Please ask your administrator to verify your sign-up")
 
 def set_country_from_ip(login_manager=None, user=None):
 	if not user and login_manager:
@@ -129,7 +130,3 @@ def save_course(
 	)
 	doc.save(ignore_permissions=True)
 	return doc.name
-
-def get_new_context(context):
-	print('abcd....')
-	context.my_key = "my_value"

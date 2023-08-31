@@ -89,27 +89,12 @@
                 required>
         </div>
 
-        {% if frappe.db.get_single_value("LMS Settings", "user_category") %}
         <div class="form-group">
-            <label class="form-label sr-only"> {{ _("User Category") }} </label>
-            <div class="control-input-wrapper">
-                <div class="control-input flex align-center">
-                    <select type="text" id="user_category" data-fieldname="user_category"
-                        class="input-with-feedback form-control ellipsis"
-                        data-fieldtype="Select" required>
-                        <option value=""> {{ _("Category") }} </option>
-                        <option value="Business Owner"> {{ _("Business Owner") }} </option>
-                        <option value="Manager (Sales/Marketing/Customer)"> {{ _("Manager (Sales/Marketing/Customer)")
-                            }} </option>
-                        <option value="Employee"> {{ _("Employee") }} </option>
-                        <option value="Student"> {{ _("Student") }} </option>
-                        <option value="Freelancer/Just looking"> {{ _("Freelancer/Just looking") }} </option>
-                        <option value="Others"> {{ _("Others") }} </option>
-                    </select>
-                </div>
-            </div>
+            <label class="form-label sr-only" for="new_password"> {{ _("Exact Business") }} </label>
+            <input type="text" id="new_password" class="form-control"
+                placeholder="{{ _('Password') }}"
+                required>
         </div>
-        {% endif %}
 
         <div class="form-group">
             <div class="checkbox">
@@ -142,7 +127,7 @@
         $("#yearly_sales").css("color", "#000");
         $("#signup_employees").css("color", "#000");
         $("#verify_terms").css("color", "#000");
-        $("#user_category").css("color", "#000");
+        $("#new_password").css("color", "#000");
         $("#user_experience").css("color", "#000");
         $("#exact_business").css("color", "#000");
         $(".signup-form").on("submit", (e) => {
@@ -157,6 +142,7 @@
         const signup_phone = frappe.utils.xss_sanitise(($("#signup_phone").val() || "").trim());
         const signup_employees = frappe.utils.xss_sanitise(($("#signup_employees").val() || "").trim());
         const exact_business = frappe.utils.xss_sanitise(($("#exact_business").val() || "").trim());
+        const new_password = frappe.utils.xss_sanitise(($("#new_password").val() || "").trim());
 
         if (!email || !validate_email(email) || !full_name) {
             login.set_status('{{ _("Valid email and name required") }}', 'red');
@@ -173,7 +159,7 @@
                 "yearly_sales": $("#yearly_sales").length ? $("#yearly_sales").val() : "",
                 "signup_employees": signup_employees,
                 "verify_terms": $("#signup-terms").prop("checked") ? 1 : 0,
-                "user_category": $("#user_category").length ? $("#user_category").val() : "",
+                "new_password": new_password,
                 "user_experience": $("#user_experience").length ? $("#user_experience").val() : "",
                 "exact_business": exact_business,
             },

@@ -217,22 +217,11 @@ required_apps = ["lms"]
 #	"erptech_lms.auth.validate"
 # ]
 
-# override_whitelisted_methods = {
-# 	"lms.www.courses.create.get_context": "erptech_lms.api.get_context"
-# }
-# doc_events = {
-#     "LMS Course": {
-#         "onload": "erptech_lms.api.get_contextsss"
-#     }
-# }
-
-# website_route_rules = [
-#     {"from_route": "/courses/<course>/edit", "to_route": "courses/create_overview"},
-# ]
-# website_route_rules = [
-# 	{"from_route": "/courses/p", "to_route": "courses/p"},
-# ]
-# extend_website_page_controller_context = {
-#     "lms.www.courses": "erptech_lms.api.get_new_context"
-# }
+website_route_rules = [
+    {"from_route": "/", "to_route": "mycourses"},
+]
+website_redirects = [
+	{"source": "/", "target": "/mycourses"},
+	{"source": "/courses", "target": "/mycourses"}
+]
 signup_form_template = "erptech_lms.plugins.show_custom_signup"

@@ -65,14 +65,6 @@
 
         <ul class="nav lms-nav" id="courses-tab">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#live">
-                    {{ _("Live") }}
-                    <span class="course-list-count">
-                        {{ live_courses | length }}
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#manufacturer">
                     {{ _("Manufacturer") }}
                     <span class="course-list-count">
@@ -104,29 +96,12 @@
                     </span>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#upcoming">
-                    {{ _("Upcoming") }}
-                    <span class="course-list-count">
-                        {{ upcoming_courses | length }}
-                    </span>
-                </a>
-            </li>
-
         </ul>
 
         <div class="border-bottom mb-4"></div>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="live" role="tabpanel" aria-labelledby="live">
-                {% set courses = live_courses %}
-                {% set title = _("Live Courses") %}
-                {% set classes = "live-courses" %}
-                {% include "lms/templates/course_list.html" %}
-            </div>
-
-            <div class="tab-pane" id="manufacturer" role="tabpanel" aria-labelledby="manufacturer">
+            <div class="tab-pane active" id="manufacturer" role="tabpanel" aria-labelledby="manufacturer">
                 {% set courses = manufacturer_courses %}
                 {% set title = _("Manufacturer Courses") %}
                 {% set classes = "manufacturer-courses" %}
@@ -151,13 +126,6 @@
                 {% set courses = services_courses %}
                 {% set title = _("Services Courses") %}
                 {% set classes = "services-courses" %}
-                {% include "lms/templates/course_list.html" %}
-            </div>
-
-            <div class="tab-pane" id="upcoming" role="tabpanel" aria-labelledby="upcoming">
-                {% set courses = upcoming_courses %}
-                {% set title = _("Upcoming Courses") %}
-                {% set classes = "upcoming-courses" %}
                 {% include "lms/templates/course_list.html" %}
             </div>
 

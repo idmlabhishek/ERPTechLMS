@@ -10,14 +10,12 @@ from lms.lms.utils import (
 )
 from lms.overrides.user import get_enrolled_courses, get_authored_courses
 
-
 def get_context(context):
 	context.no_cache = 1
-	context.live_courses, context.upcoming_courses = get_courses()
-	context.manufacturer_courses = get_courses_filter('custom_manufacturer')
-	context.wholeseller_courses = get_courses_filter('custom_wholeseller')
-	context.retail_courses = get_courses_filter('custom_retail')
-	context.services_courses = get_courses_filter('custom_services')
+	context.manufacturer_courses = get_courses('custom_manufacturer')
+	context.wholeseller_courses = get_courses('custom_wholeseller')
+	context.retail_courses = get_courses('custom_retail')
+	context.services_courses = get_courses('custom_services')
 	context.enrolled_courses = (
 		get_enrolled_courses()["in_progress"] + get_enrolled_courses()["completed"]
 	)
@@ -40,41 +38,7 @@ def get_context(context):
 	}
 
 
-def get_courses():
-	courses = frappe.get_all(
-		"LMS Course",
-		filters={"published": True},
-		fields=[
-			"name",
-			"upcoming",
-			"title",
-			"short_introduction",
-			"image",
-			"paid_course",
-			"course_price",
-			"currency",
-			"creation",
-		],
-	)
-
-	live_courses, upcoming_courses = [], []
-	for course in courses:
-		course.enrollment_count = frappe.db.count(
-			"LMS Enrollment", {"course": course.name, "member_type": "Student"}
-		)
-		course.avg_rating = get_average_rating(course.name) or 0
-		if course.upcoming:
-			upcoming_courses.append(course)
-		else:
-			live_courses.append(course)
-
-	live_courses.sort(key=lambda x: x.enrollment_count, reverse=True)
-	upcoming_courses.sort(key=lambda x: x.enrollment_count, reverse=True)
-
-	return live_courses, upcoming_courses
-
-
-def get_courses_filter(filter):
+def get_courses(filter):
 	courses = frappe.get_all(
 		"LMS Course",
 		filters={filter: True},
@@ -84,7 +48,6 @@ def get_courses_filter(filter):
 			"custom_wholeseller",
 			"custom_retail",
 			"custom_services",
-			"upcoming",
 			"title",
 			"short_introduction",
 			"image",
@@ -99,6 +62,5 @@ def get_courses_filter(filter):
 	for course in courses:
 		course.avg_rating = get_average_rating(course.name) or 0
 		filter_courses.append(course)
-	
-	filter_courses.sort(key=lambda x: x.enrollment_count, reverse=True)
+		
 	return filter_courses
