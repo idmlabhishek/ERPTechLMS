@@ -1,5 +1,5 @@
 app_name = "erptech_lms"
-app_title = "ERP TECH LMS"
+app_title = "ERPTech LMS"
 app_publisher = "erptech"
 app_description = "It is Customize the Frappe LMS App"
 app_email = "erptechin@gmail.com"
