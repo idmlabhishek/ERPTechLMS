@@ -1,10 +1,10 @@
 app_name = "erptech_lms"
-app_title = "Erptech Lms"
+app_title = "ERP TECH LMS"
 app_publisher = "erptech"
-app_description = "ERP TECH LMS"
+app_description = "It is Customize the Frappe LMS App"
 app_email = "erptechin@gmail.com"
 app_license = "MIT"
-# required_apps = []
+required_apps = ["lms"]
 
 # Includes in <head>
 # ------------------
@@ -16,6 +16,8 @@ app_license = "MIT"
 # include js, css files in header of web template
 # web_include_css = "/assets/erptech_lms/css/erptech_lms.css"
 # web_include_js = "/assets/erptech_lms/js/erptech_lms.js"
+
+# web_include_js = "/assets/erptech_lms/js/courses.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "erptech_lms/public/scss/website"
@@ -215,5 +217,22 @@ app_license = "MIT"
 #	"erptech_lms.auth.validate"
 # ]
 
+# override_whitelisted_methods = {
+# 	"lms.www.courses.create.get_context": "erptech_lms.api.get_context"
+# }
+# doc_events = {
+#     "LMS Course": {
+#         "onload": "erptech_lms.api.get_contextsss"
+#     }
+# }
 
+# website_route_rules = [
+#     {"from_route": "/courses/<course>/edit", "to_route": "courses/create_overview"},
+# ]
+# website_route_rules = [
+# 	{"from_route": "/courses/p", "to_route": "courses/p"},
+# ]
+# extend_website_page_controller_context = {
+#     "lms.www.courses": "erptech_lms.api.get_new_context"
+# }
 signup_form_template = "erptech_lms.plugins.show_custom_signup"

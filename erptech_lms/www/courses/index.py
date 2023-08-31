@@ -10,6 +10,7 @@ from lms.lms.utils import (
 )
 from lms.overrides.user import get_enrolled_courses, get_authored_courses
 
+
 def get_context(context):
 	context.no_cache = 1
 	context.live_courses, context.upcoming_courses = get_courses()
@@ -71,6 +72,7 @@ def get_courses():
 	upcoming_courses.sort(key=lambda x: x.enrollment_count, reverse=True)
 
 	return live_courses, upcoming_courses
+
 
 def get_courses_filter(filter):
 	courses = frappe.get_all(

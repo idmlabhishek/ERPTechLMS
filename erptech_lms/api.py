@@ -61,7 +61,6 @@ def sign_up(email, full_name, signup_phone, verify_terms,exact_business, signup_
 	else:
 		return 2, _("Please ask your administrator to verify your sign-up")
 
-
 def set_country_from_ip(login_manager=None, user=None):
 	if not user and login_manager:
 		user = login_manager.user
@@ -82,8 +81,6 @@ def get_country_code():
 	except Exception:
 		pass
 	return
-
-
 
 @frappe.whitelist()
 def save_course(
@@ -111,7 +108,6 @@ def save_course(
 		doc = frappe.get_doc("LMS Course", course)
 	else:
 		doc = frappe.get_doc({"doctype": "LMS Course"})
-
 	doc.update(
 		{
 			"title": title,
@@ -134,3 +130,6 @@ def save_course(
 	doc.save(ignore_permissions=True)
 	return doc.name
 
+def get_new_context(context):
+	print('abcd....')
+	context.my_key = "my_value"
