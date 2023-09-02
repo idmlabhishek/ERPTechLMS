@@ -156,9 +156,9 @@ required_apps = ["lms"]
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-#	"frappe.desk.doctype.event.event.get_events": "erptech_lms.event.get_events"
-# }
+override_whitelisted_methods = {
+	"lms.lms.utils.get_course_completion_data": "erptech_lms.api.courses_completion_data"
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,

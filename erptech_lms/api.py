@@ -141,3 +141,19 @@ def save_course(
 	)
 	doc.save(ignore_permissions=True)
 	return doc.name
+
+
+@frappe.whitelist(allow_guest=True)
+def courses_completion_data():
+	all_membership = frappe.db.count("LMS Enrollment")
+	completed = frappe.db.count("LMS Enrollment", {"progress": ["like", "%100%"]})
+
+	return {
+		"labels": ["Completed", "In Progress"],
+		"datasets": [
+			{
+				"name": "Course Completion",
+				"values": [completed, all_membership - completed],
+			}
+		],
+	}
