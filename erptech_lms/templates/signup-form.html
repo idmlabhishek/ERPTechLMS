@@ -69,8 +69,7 @@
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
                     <select type="text" id="user_experience" data-fieldname="user_experience"
-                         class="input-with-feedback form-control ellipsis"
-                        data-fieldtype="Select" required>
+                        class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
                         <option value=""> {{ _("Aapka business experience?") }} </option>
                         <option value="Ek student hu"> {{ _("Ek student hu")}} </option>
                         <option value="Abhi tak koyi business nahi hai, start karna chahta hu"> {{ _("Abhi tak koyi
@@ -91,9 +90,7 @@
 
         <div class="form-group">
             <label class="form-label sr-only" for="new_password"> {{ _("Exact Business") }} </label>
-            <input type="text" id="new_password" class="form-control"
-                placeholder="{{ _('Password') }}"
-                required>
+            <input type="text" id="new_password" class="form-control" placeholder="{{ _('Password') }}" required>
         </div>
 
         <div class="form-group">
@@ -119,6 +116,7 @@
 </form>
 
 <script>
+    window.login = {};
     frappe.ready(function () {
         $("#full_name").css("color", "#000");
         $("#email").css("color", "#000");
@@ -163,8 +161,57 @@
                 "user_experience": $("#user_experience").length ? $("#user_experience").val() : "",
                 "exact_business": exact_business,
             },
-            statusCode: login.login_handlers
+            callback: function (r) {
+                if (r.message) {
+                    login.call({ cmd: "login", usr: email, pwd: new_password, device: "desktop" });
+                    return false;
+                }
+            }
         })
+
+        login.login_handlers = (function () {
+            var login_handlers = {
+                200: function (data) {
+                    if (data.message == "No App") {
+                        // LMS Enrollment
+                        const redirect = frappe.utils.get_url_arg("redirect-to");
+                        if (redirect) {
+                            const parts = redirect.split("/");
+                            const course = parts[parts.length - 1];
+                            frappe.call({
+                                method: "erptech_lms.api.new_enrollment",
+                                args: {
+                                    "doctype": "LMS Enrollment",
+                                    "member_type": "Student",
+                                    "course": course,
+                                    "member": email
+                                },
+                            })
+                        }
+                        login.set_status("{{ _('Success') }}", 'green');
+                        setTimeout(() => {
+                            if (localStorage) {
+                                var last_visited =
+                                    localStorage.getItem("last_visited")
+                                    || frappe.utils.sanitise_redirect(frappe.utils.get_url_arg("redirect-to"));
+                                localStorage.removeItem("last_visited");
+                            }
+                            if (data.redirect_to) {
+                                window.location.href = frappe.utils.sanitise_redirect(data.redirect_to);
+                            }
+
+                            if (last_visited && last_visited != "/login") {
+                                window.location.href = last_visited;
+                            } else {
+                                window.location.href = data.home_page;
+                            }
+                        }, 2000)
+
+                    }
+                }
+            };
+            return login_handlers;
+        })();
         return false;
     }
 </script>

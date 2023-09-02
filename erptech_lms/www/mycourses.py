@@ -16,6 +16,7 @@ def get_context(context):
 	context.wholeseller_courses = get_courses('custom_wholeseller')
 	context.retail_courses = get_courses('custom_retail')
 	context.services_courses = get_courses('custom_services')
+	context.small_business_courses = get_courses('custom_small_business')
 	context.enrolled_courses = (
 		get_enrolled_courses()["in_progress"] + get_enrolled_courses()["completed"]
 	)
@@ -48,6 +49,7 @@ def get_courses(filter):
 			"custom_wholeseller",
 			"custom_retail",
 			"custom_services",
+			"custom_small_business",
 			"title",
 			"short_introduction",
 			"image",

@@ -96,6 +96,14 @@
                     </span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#small_business">
+                    {{ _("Small Business") }}
+                    <span class="course-list-count">
+                        {{ small_business_courses | length }}
+                    </span>
+                </a>
+            </li>
         </ul>
 
         <div class="border-bottom mb-4"></div>
@@ -126,6 +134,13 @@
                 {% set courses = services_courses %}
                 {% set title = _("Services Courses") %}
                 {% set classes = "services-courses" %}
+                {% include "lms/templates/course_list.html" %}
+            </div>
+
+            <div class="tab-pane" id="small_business" role="tabpanel" aria-labelledby="small_business">
+                {% set courses = small_business_courses %}
+                {% set title = _("Small Business Courses") %}
+                {% set classes = "small_business-courses" %}
                 {% include "lms/templates/course_list.html" %}
             </div>
 

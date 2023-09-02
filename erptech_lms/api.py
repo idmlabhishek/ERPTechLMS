@@ -14,7 +14,7 @@ def sign_up(email, full_name, signup_phone, verify_terms, exact_business, signup
 	user = frappe.db.get("User", {"email": email})
 	if user:
 		if user.enabled:
-			return 0, _("Already Registered")
+			return 0, _("Already Registered. Please click Login below to login")
 		else:
 			return 0, _("Registered but disabled")
 	else:
@@ -82,6 +82,18 @@ def get_country_code():
 	except Exception:
 		pass
 	return
+
+@frappe.whitelist()
+def new_enrollment(doctype, member_type, course, member):
+	todo = frappe.get_doc({
+		"doctype":doctype,
+		"member_type":member_type,
+		"course":course,
+		"member":member
+	})
+	todo.insert(ignore_permissions = True)
+	todo.submit()
+	return todo.name
 
 @frappe.whitelist()
 def save_course(
