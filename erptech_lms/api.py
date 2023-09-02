@@ -92,7 +92,6 @@ def new_enrollment(doctype, member_type, course, member):
 		"member":member
 	})
 	todo.insert(ignore_permissions = True)
-	todo.submit()
 	return todo.name
 
 @frappe.whitelist()
