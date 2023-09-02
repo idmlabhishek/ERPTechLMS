@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label class="form-label sr-only" for="signup_phone"> {{ _("Phone") }} </label>
-            <input type="number" id="signup_phone" class="form-control"
+            <input type="text" id="signup_phone" class="form-control" pattern="^[789]\d{9,9}$"
                 placeholder="{{ _('Phone number without country code (ex. 9299343394)') }}" required>
         </div>
 
