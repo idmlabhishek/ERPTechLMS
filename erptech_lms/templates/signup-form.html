@@ -208,27 +208,11 @@
                                     "member": email
                                 },
                             })
-                            window.location.href = '/courses/' + parts[2] + '/learn/1.1';
+                            setTimeout(() => {
+                                window.location.href = '/courses/' + parts[2] + '/learn/1.1';
+                            }, 2000)
                         }
                         login.set_status("{{ _('Success') }}", 'green');
-                        setTimeout(() => {
-                            if (localStorage) {
-                                var last_visited =
-                                    localStorage.getItem("last_visited")
-                                    || frappe.utils.sanitise_redirect(frappe.utils.get_url_arg("redirect-to"));
-                                localStorage.removeItem("last_visited");
-                            }
-                            if (data.redirect_to) {
-                                window.location.href = frappe.utils.sanitise_redirect(data.redirect_to);
-                            }
-
-                            if (last_visited && last_visited != "/login") {
-                                window.location.href = last_visited;
-                            } else {
-                                window.location.href = data.home_page;
-                            }
-                        }, 2000)
-
                     }
                 }
             };
