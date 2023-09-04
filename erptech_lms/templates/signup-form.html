@@ -15,6 +15,7 @@
         <div class="form-group">
             <label class="form-label sr-only" for="signup_phone"> {{ _("Phone") }} </label>
             <input type="text" id="signup_phone" class="form-control" pattern="^[789]\d{9,9}$"
+                title="Please enter a valid phone number"
                 placeholder="{{ _('Phone number without country code (ex. 9299343394)') }}" required>
         </div>
 
@@ -22,10 +23,11 @@
             <label class="form-label sr-only"> {{ _("Business Type") }} </label>
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
-                    <select type="text" id="user_types" data-fieldname="user_types"
-                        class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
+                    <select type="select" class="input-with-feedback form-control ellipsis" id="user_types"
+                        placeholder="Business Type" required>
                         <option value=""> {{ _("Business Type") }} </option>
-                        <option value="Advisor/Consultant"> {{ _("Advisor/Consultant") }} </option>
+                        <option value="Advisor/Consultant"> {{ _("Advisor/Consultant") }}
+                        </option>
                         <option value="Professionals(CA, Doctor, Architect, Lawyer etc)"> {{ _("Professionals(CA,
                             Doctor, Architect, Lawyer etc)")}} </option>
                         <option value="Service Provider"> {{ _("Service Provider") }} </option>
@@ -45,8 +47,7 @@
             <label class="form-label sr-only"> {{ _("Your Yearly sales (Aapki Salaana Sales)") }} </label>
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
-                    <select type="text" id="yearly_sales" data-fieldname="yearly_sales"
-                        class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
+                    <select type="text" id="yearly_sales" class="input-with-feedback form-control ellipsis" required>
                         <option value=""> {{ _("Your Yearly sales (Aapki Salaana Sales)") }} </option>
                         <option value="Less than 15 Lakhs"> {{ _("Less than 15 Lakhs")}} </option>
                         <option value="15-25 Lakhs"> {{ _("15-25 Lakhs") }} </option>
@@ -68,8 +69,7 @@
             <label class="form-label sr-only"> {{ _("Aapka business experience?") }} </label>
             <div class="control-input-wrapper">
                 <div class="control-input flex align-center">
-                    <select type="text" id="user_experience" data-fieldname="user_experience"
-                        class="input-with-feedback form-control ellipsis" data-fieldtype="Select" required>
+                    <select type="text" id="user_experience" class="input-with-feedback form-control ellipsis" required>
                         <option value=""> {{ _("Aapka business experience?") }} </option>
                         <option value="Ek student hu"> {{ _("Ek student hu")}} </option>
                         <option value="Abhi tak koyi business nahi hai, start karna chahta hu"> {{ _("Abhi tak koyi
@@ -114,20 +114,40 @@
         </p>
     </div>
 </form>
-
 <script>
     window.login = {};
     frappe.ready(function () {
         $("#full_name").css("color", "#000");
         $("#email").css("color", "#000");
         $("#signup_phone").css("color", "#000");
-        $("#user_types").css("color", "#000");
-        $("#yearly_sales").css("color", "#000");
         $("#signup_employees").css("color", "#000");
         $("#verify_terms").css("color", "#000");
         $("#new_password").css("color", "#000");
-        $("#user_experience").css("color", "#000");
         $("#exact_business").css("color", "#000");
+        $("#user_types").on("change", (e) => {
+            if (e.target.value) {
+                $("#user_types").css("color", "#000");
+            } else {
+                $("#user_types").css("color", "#7f7979");
+            }
+
+        });
+        $("#yearly_sales").on("change", (e) => {
+            if (e.target.value) {
+                $("#yearly_sales").css("color", "#000");
+            } else {
+                $("#yearly_sales").css("color", "#7f7979");
+            }
+
+        });
+        $("#user_experience").on("change", (e) => {
+            if (e.target.value) {
+                $("#user_experience").css("color", "#000");
+            } else {
+                $("#user_experience").css("color", "#7f7979");
+            }
+
+        });
         $(".signup-form").on("submit", (e) => {
             signup(e);
         });
@@ -162,9 +182,11 @@
                 "exact_business": exact_business,
             },
             callback: function (r) {
-                if (r.message) {
+                if (r.message && r.message[0] == 1) {
                     login.call({ cmd: "login", usr: email, pwd: new_password, device: "desktop" });
                     return false;
+                } else {
+                    login.set_status(r.message[1], 'red');
                 }
             }
         })
@@ -177,17 +199,16 @@
                         const redirect = frappe.utils.get_url_arg("redirect-to");
                         if (redirect) {
                             const parts = redirect.split("/");
-                            const course = parts[parts.length - 1];
                             frappe.call({
                                 method: "erptech_lms.api.new_enrollment",
                                 args: {
                                     "doctype": "LMS Enrollment",
                                     "member_type": "Student",
-                                    "course": course,
+                                    "course": parts[2],
                                     "member": email
                                 },
                             })
-                            window.location.href = '/courses/' + course + '/learn/1.1';
+                            window.location.href = '/courses/' + parts[2] + '/learn/1.1';
                         }
                         login.set_status("{{ _('Success') }}", 'green');
                         setTimeout(() => {
