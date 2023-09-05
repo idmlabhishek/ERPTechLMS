@@ -218,10 +218,10 @@ override_whitelisted_methods = {
 # ]
 
 website_route_rules = [
-    {"from_route": "/", "to_route": "mycourses"},
+    {"from_route": "/", "to_route": "idmlcourses"},
 ]
 website_redirects = [
-	{"source": "/", "target": "/mycourses"},
-	{"source": "/courses", "target": "/mycourses"}
+	{"source": "/", "target": "/idmlcourses"},
+	{"source": "/courses", "target": "/idmlcourses"}
 ]
 signup_form_template = "erptech_lms.plugins.show_custom_signup"
