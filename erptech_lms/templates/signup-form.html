@@ -211,6 +211,8 @@
                             setTimeout(() => {
                                 window.location.href = '/courses/' + parts[2] + '/learn/1.1';
                             }, 2000)
+                        } else {
+                            window.location.href = '/';
                         }
                         login.set_status("{{ _('Success') }}", 'green');
                     }

@@ -216,11 +216,7 @@ override_whitelisted_methods = {
 # auth_hooks = [
 #	"erptech_lms.auth.validate"
 # ]
-web_form = {
-    "User": {
-        "edit_profile_custom": "erptech_lms.module.edit_profile_custom"
-    }
-}
+
 website_route_rules = [
     {"from_route": "/", "to_route": "idmlcourses"},
 ]
