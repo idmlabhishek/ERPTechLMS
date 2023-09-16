@@ -223,6 +223,6 @@ website_route_rules = [
 website_redirects = [
 	{"source": "/", "target": "/idmlcourses"},
 	{"source": "/courses", "target": "/idmlcourses"},
-    {"source": "/edit-profile/(.*)", "target": "/lms-profile/\1"}
+    {"source": "/edit-profile/(.*)", "target": '/lms-profile/\\1'}
 ]
 signup_form_template = "erptech_lms.plugins.show_custom_signup"
