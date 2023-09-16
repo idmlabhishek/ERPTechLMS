@@ -209,7 +209,7 @@
                                 },
                             })
                             setTimeout(() => {
-                                window.location.href = '/courses/' + parts[2] + '/learn/1.1';
+                                window.location.href = '/courses/' + parts[2] + '/learn/' + `${parts[4] ?? "1.1"}`;
                             }, 2000)
                         } else {
                             window.location.href = '/';
