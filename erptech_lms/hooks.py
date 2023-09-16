@@ -10,7 +10,7 @@ required_apps = ["erpnext", "hrms", "payments", "lms"]
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/erptech/css/erptech_app.css"
+# app_include_css = "/assets/erptech/css/erptech_app.css"
 # app_include_js = "/assets/erptech_lms/js/erptech_lms.js"
 
 # include js, css files in header of web template
