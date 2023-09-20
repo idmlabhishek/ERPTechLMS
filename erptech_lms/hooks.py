@@ -4,7 +4,7 @@ app_publisher = "erptech"
 app_description = "It is Customize the Frappe LMS App"
 app_email = "erptechin@gmail.com"
 app_license = "MIT"
-required_apps = ["erpnext", "hrms", "payments", "lms"]
+required_apps = ["erpnext", "hrms", "payments", "education", "lms"]
 
 # Includes in <head>
 # ------------------
