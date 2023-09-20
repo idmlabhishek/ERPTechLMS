@@ -32,7 +32,7 @@ def sign_up(email, full_name, signup_phone, verify_terms, exact_business, signup
 			"doctype": "User",
 			"email": email,
 			"first_name": escape_html(full_name),
-			"signup_phone": signup_phone,
+			"mobile_no": signup_phone,
 			"number_of_employees": signup_employees,
 			"user_experience": user_experience,
 			"exact_business": exact_business,
