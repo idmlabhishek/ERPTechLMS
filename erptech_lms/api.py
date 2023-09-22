@@ -90,7 +90,8 @@ def new_enrollment(doctype, member_type, course, member):
 		"doctype":doctype,
 		"member_type":member_type,
 		"course":course,
-		"member":member
+		"member":member,
+		"progress": 100
 	})
 	todo.insert(ignore_permissions = True)
 	return todo.name
