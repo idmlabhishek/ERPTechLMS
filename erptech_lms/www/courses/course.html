@@ -236,10 +236,6 @@
         <a class="btn btn-primary wide-button" href="/enrolling/course/{{ course.name | urlencode }}">
             {{ _("Start Learning") }}
         </a>
-
-        <!-- <div class="btn btn-primary wide-button enroll-in-course" data-course="{{ course.name | urlencode }}">
-            {{ _("Start Learning") }}
-        </div> -->
         {% endif %}
 
         {% set progress = frappe.utils.cint(membership.progress) %}
