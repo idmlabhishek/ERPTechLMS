@@ -234,3 +234,48 @@ def get_country_code():
 	except Exception:
 		pass
 	return
+
+
+def get_details(doctype, docname):
+	if doctype == "LMS Course":
+		details = frappe.db.get_value(
+			"LMS Course",
+			docname,
+			["name", "title", "paid_course", "currency", "course_price as amount"],
+			as_dict=True,
+		)
+		if not details.paid_course:
+			frappe.throw(_("This course is free."))
+	else:
+		details = frappe.db.get_value(
+			"LMS Batch",
+			docname,
+			["name", "title", "paid_batch", "currency", "amount"],
+			as_dict=True,
+		)
+		if not details.paid_batch:
+			frappe.throw(_("To join this batch, please contact the Administrator."))
+
+	return details
+
+@frappe.whitelist()
+def get_payment_options(doctype, docname, phone, country):
+	if not frappe.db.exists(doctype, docname):
+		frappe.throw(_("Invalid document provided."))
+
+	validate_phone_number(phone, True)
+	details = get_details(doctype, docname)
+	details.amount, details.currency = check_multicurrency(
+		details.amount, details.currency, country
+	)
+	if details.currency == "INR":
+		details.amount, details.gst_applied = apply_gst(details.amount, country)
+
+	options = {
+		"purpose": details.title,
+		"amount": details.amount,
+		"name": frappe.db.get_value("User", frappe.session.user, "full_name"),
+		"email": frappe.session.user,
+		"phone": phone,
+	}
+	return options
