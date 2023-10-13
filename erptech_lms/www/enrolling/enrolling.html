@@ -1,0 +1,63 @@
+{% extends "lms/templates/lms_base.html" %}
+{% block title %}
+{{ title }} {{ _("Billing") }}
+{% endblock %}
+
+{% block page_content %}
+<div class="common-page-style">
+    <div class="container form-width common-card-style column-card px-0 h-0 mt-8">
+        {{ Header() }}
+        {{ Details() }}
+        {{ BillingDetails() }}
+    </div>
+</div>
+{% endblock %}
+
+{% macro Header() %}
+<div class="px-4 pb-2">
+    <div class="page-title">
+        {{ _("Enroll Details") }}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro Details() %}
+<div class="border-top">
+
+</div>
+{% endmacro %}
+
+{% macro BillingDetails() %}
+<div class="mt-8 px-4">
+
+    <form class="payment-form" role="form">
+        {% if isLogin %}
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_name"> {{ _("Name") }} </label>
+            <input type="text" id="signup_name" class="form-control" placeholder="{{ _('Your Name') }}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_email"> {{ _("Email") }} </label>
+            <input type="email" id="signup_email" class="form-control" placeholder="{{ _('Your Email') }}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_phone"> {{ _("Phone") }} </label>
+            <input type="text" id="signup_phone" class="form-control" pattern="^[789]\d{9,9}$"
+                title="Please enter a valid phone number"
+                placeholder="{{ _('Phone number without country code (ex. 9299343394)') }}" required>
+        </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary btn-md btn-pay" data-is_not_login="{{ isLogin }}"
+            data-country="{{ country }}" data-mobile_no="{{ mobile_no }}" data-email="{{ email }}"
+            data-full_name="{{ full_name }}" data-doctype="{{ doctype }}" data-name="{{ docname | urlencode }}">
+            {{ "Enroll Now" }}
+        </button>
+    </form>
+
+
+</div>
+{% endmacro %}
+
+{%- block script %}
+{{ super() }}
+{% endblock %}

@@ -219,6 +219,14 @@ override_whitelisted_methods = {
 
 website_route_rules = [
     {"from_route": "/", "to_route": "idmlcourses"},
+    {
+		"from_route": "/enrolling/<module>/<modulename>",
+		"to_route": "enrolling/enrolling",
+	},
+    {
+		"from_route": "/booking/<module>/<modulename>",
+		"to_route": "booking/booking",
+	},
 ]
 website_redirects = [
 	{"source": "/", "target": "/idmlcourses"},
