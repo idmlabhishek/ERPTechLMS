@@ -2,10 +2,6 @@ frappe.ready(() => {
 	$(".payment-form").on("submit", (e) => {
 		generate_payment_link(e);
 	});
-	Instamojo.configure({
-		apiKey: "YOUR_API_KEY",
-		auth: "YOUR_AUTH_TOKEN",
-	});
 });
 
 const generate_payment_link = (e) => {
@@ -59,8 +55,8 @@ const generate_payment_link = (e) => {
 const enrolling_course = (doctype, docname, mobile_no, full_name, country) => {
 	let new_address = { billing_name: full_name }
 	frappe.call({
-		// method: "lms.lms.utils.get_payment_options",
-		method: "erptech_lms.erptech_lms.utils.get_payment_options",
+		method: "lms.lms.utils.get_payment_options",
+		// method: "erptech_lms.erptech_lms.utils.get_payment_options",
 		args: {
 			doctype: doctype,
 			docname: docname,
@@ -69,7 +65,7 @@ const enrolling_course = (doctype, docname, mobile_no, full_name, country) => {
 		},
 		callback: (data) => {
 			let options = data.message
-			data.message.handler = (response) => {
+			data.message.handlers = (response) => {
 				console.log(response)
 				handle_success(
 					response,
@@ -79,9 +75,10 @@ const enrolling_course = (doctype, docname, mobile_no, full_name, country) => {
 					data.message.order_id
 				);
 			};
-			// let rzp1 = new Razorpay(options);
-			// rzp1.open();
-			Instamojo.open(`https://www.instamojo.com/@carvemylife/?embed=form&purpose=${options.purpose}&amount=${options.amount}&name=John+Doe&email=johndoe@example.com&phone=1234567890`, options);
+			let rzp1 = new Razorpay(options);
+			rzp1.open();
+			// Instamojo.open(`https://test.instamojo.com/@sumit_fb76c/?embed=form&purpose=${options.purpose}&amount=${options.amount}&name=John+Doe&email=johndoe@example.com&phone=1234567890`, options);
+			// Instamojo.open(`https://www.instamojo.com/@carvemylife/?embed=form&purpose=${options.purpose}&amount=${options.amount}&name=John+Doe&email=johndoe@example.com&phone=1234567890`, options);
 		},
 	});
 }

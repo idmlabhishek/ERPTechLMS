@@ -1,4 +1,34 @@
 frappe.ready(() => {
+	$("#signup_name").css("color", "#000");
+	$("#signup_email").css("color", "#000");
+	$("#signup_phone").css("color", "#000");
+	$("#signup_employees").css("color", "#000");
+	$("#new_password").css("color", "#000");
+	$("#exact_business").css("color", "#000");
+	$("#user_types").on("change", (e) => {
+		if (e.target.value) {
+			$("#user_types").css("color", "#000");
+		} else {
+			$("#user_types").css("color", "#7f7979");
+		}
+
+	});
+	$("#yearly_sales").on("change", (e) => {
+		if (e.target.value) {
+			$("#yearly_sales").css("color", "#000");
+		} else {
+			$("#yearly_sales").css("color", "#7f7979");
+		}
+
+	});
+	$("#user_experience").on("change", (e) => {
+		if (e.target.value) {
+			$("#user_experience").css("color", "#000");
+		} else {
+			$("#user_experience").css("color", "#7f7979");
+		}
+
+	});
 	$(".payment-form").on("submit", (e) => {
 		enrolling_link(e);
 	});
@@ -12,6 +42,12 @@ const enrolling_link = (e) => {
 	let full_name = buttonElement.getAttribute('data-full_name')
 	let docname = buttonElement.getAttribute('data-name')
 	let isNotLogin = buttonElement.getAttribute('data-is_not_login')
+	let user_types = $("#user_types").length ? $("#user_types").val() : "";
+	let yearly_sales = $("#yearly_sales").length ? $("#yearly_sales").val() : "";
+	let signup_employees = frappe.utils.xss_sanitise(($("#signup_employees").val() || "").trim());
+	let new_password = frappe.utils.xss_sanitise(($("#new_password").val() || "").trim());
+	let user_experience = $("#user_experience").length ? $("#user_experience").val() : "";
+	let exact_business = frappe.utils.xss_sanitise(($("#exact_business").val() || "").trim());
 	if (isNotLogin == "True") {
 		full_name = frappe.utils.xss_sanitise(($("#signup_name").val() || "").trim());
 		email = frappe.utils.xss_sanitise(($("#signup_email").val() || "").trim());
@@ -22,6 +58,12 @@ const enrolling_link = (e) => {
 				"full_name": full_name,
 				"email": email,
 				"mobile_no": mobile_no,
+				"user_types": user_types,
+				"yearly_sales": yearly_sales,
+				"signup_employees": signup_employees,
+				"new_password": new_password,
+				"user_experience": user_experience,
+				"exact_business": exact_business,
 			},
 			callback: (data) => {
 				if (data.message && data.message[0] == 1) {

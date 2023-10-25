@@ -174,7 +174,7 @@ def get_current_exchange_rate(source, target="USD"):
 
 
 @frappe.whitelist(allow_guest=True)
-def create_new_user(full_name, email, mobile_no):
+def create_new_user(full_name, email, mobile_no, user_types=None, yearly_sales=None, signup_employees=None, password=None, user_experience=None, exact_business=None):
 	if is_signup_disabled():
 		frappe.throw(_("Sign Up is disabled"), _("Not Allowed"))
 
@@ -194,7 +194,7 @@ def create_new_user(full_name, email, mobile_no):
 				http_status_code=429,
 			)
 
-	new_password = random_string(10)
+	new_password = password if password else random_string(10)
 	user = frappe.get_doc(
 		{
 			"doctype": "User",
@@ -202,8 +202,13 @@ def create_new_user(full_name, email, mobile_no):
 			"first_name": escape_html(full_name),
 			"mobile_no": mobile_no,
 			"enabled": 1,
-			"new_password": new_password,
 			"user_type": "Website User",
+			"number_of_employees": signup_employees,
+			"user_experience": user_experience,
+			"exact_business": exact_business,
+			"user_types": user_types,
+			"yearly_sales": yearly_sales,
+			"new_password": new_password,
 		}
 	)
 	user.flags.ignore_permissions = True
@@ -214,7 +219,7 @@ def create_new_user(full_name, email, mobile_no):
 	user.add_roles("System Manager")
 	user.add_roles("Student")
 
-	set_country_from_ip(None, user.name)
+	# set_country_from_ip(None, user.name)
 	return 1, _(new_password)
 
 def set_country_from_ip(login_manager=None, user=None):
