@@ -263,7 +263,7 @@ def get_details(doctype, docname):
 
 	return details
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_payment_options(doctype, docname, phone, country):
 	if not frappe.db.exists(doctype, docname):
 		frappe.throw(_("Invalid document provided."))

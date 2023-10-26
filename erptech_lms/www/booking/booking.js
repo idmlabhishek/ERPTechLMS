@@ -43,7 +43,12 @@ const generate_payment_link = (e) => {
 						}
 					});
 				} else {
-					alert(data.message[1]);
+					if (data.message[1] == "Already Registered. Please click Login below to login") {
+						enrolling_course(doctype, docname, mobile_no, full_name, country)
+					} else {
+						alert(data.message[1]);
+					}
+
 				}
 			},
 		})
