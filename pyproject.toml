@@ -3,7 +3,7 @@ name = "erptech_lms"
 authors = [
     { name = "erptech", email = "erptechin@gmail.com"}
 ]
-description = "ERP TECH LMS"
+description = "It is Customize the Frappe LMS App"
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]

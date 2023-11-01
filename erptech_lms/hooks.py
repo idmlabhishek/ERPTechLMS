@@ -3,21 +3,19 @@ app_title = "ERPTech LMS"
 app_publisher = "erptech"
 app_description = "It is Customize the Frappe LMS App"
 app_email = "erptechin@gmail.com"
-app_license = "MIT"
-required_apps = ["erpnext", "hrms", "payments", "education", "lms"]
+app_license = "mit"
+required_apps = ["erpnext",  "payments", "lms"]
 
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/erptech/css/erptech_app.css"
+# app_include_css = "/assets/erptech_lms/css/erptech_lms.css"
 # app_include_js = "/assets/erptech_lms/js/erptech_lms.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/erptech_lms/css/erptech_lms.css"
 # web_include_js = "/assets/erptech_lms/js/erptech_lms.js"
-
-# web_include_js = "/assets/erptech_lms/js/courses.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "erptech_lms/public/scss/website"
@@ -34,6 +32,11 @@ required_apps = ["erpnext", "hrms", "payments", "education", "lms"]
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
+
+# Svg Icons
+# ------------------
+# include app icons in desk
+# app_include_icons = "erptech_lms/public/icons.svg"
 
 # Home Pages
 # ----------
@@ -216,7 +219,6 @@ override_whitelisted_methods = {
 # auth_hooks = [
 #	"erptech_lms.auth.validate"
 # ]
-
 website_route_rules = [
     {"from_route": "/", "to_route": "idmlcourses"},
     {
@@ -233,4 +235,3 @@ website_redirects = [
 	{"source": "/courses", "target": "/idmlcourses"},
     {"source": "/edit-profile/(.*)", "target": '/lms-profile/\\1'}
 ]
-signup_form_template = "erptech_lms.plugins.show_custom_signup"

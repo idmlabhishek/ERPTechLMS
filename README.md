@@ -1,7 +1,7 @@
-## Erptech Lms
+## ERPTech LMS
 
-ERP TECH LMS
+It is Customize the Frappe LMS App
 
 #### License
 
-MIT
+mit
