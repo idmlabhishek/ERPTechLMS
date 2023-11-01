@@ -217,7 +217,7 @@ def create_new_user(full_name, email, mobile_no, user_types=None, yearly_sales=N
 
 	# add roles
 	user.add_roles("System Manager")
-	user.add_roles("Student")
+	user.add_roles("LMS Student")
 
 	# set_country_from_ip(None, user.name)
 	return 1, _(new_password)
