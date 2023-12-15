@@ -235,3 +235,9 @@ website_redirects = [
 	{"source": "/courses", "target": "/idmlcourses"},
     {"source": "/edit-profile/(.*)", "target": '/lms-profile/\\1'}
 ]
+
+doc_events = {
+    "LMS Payment": {
+        "on_update": "erptech_lms.api.postSalesInvoice"
+    }
+}

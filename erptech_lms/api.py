@@ -1,7 +1,7 @@
 import frappe
 import requests
 from frappe import _
-from frappe.utils import cint, escape_html, random_string
+from frappe.utils import cint, escape_html, nowdate
 from frappe.website.utils import is_signup_disabled
 
 from lms.lms.utils import get_chapters, can_create_courses
@@ -159,3 +159,64 @@ def courses_completion_data():
 			}
 		],
 	}
+
+
+@frappe.whitelist(allow_guest=True)
+def new_enrollment_from_lms(member,payment):
+	print(member)
+	print(payment)
+	# todo = frappe.get_doc({
+	# 	"doctype":doctype,
+	# 	"member_type":member_type,
+	# 	"course":course,
+	# 	"member":member,
+	# 	"progress": 100
+	# })
+	# todo.insert(ignore_permissions = True)
+	return member
+
+
+@frappe.whitelist(allow_guest=True)
+def postSalesInvoice(doc, method):
+	url = "http://localhost:8001/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
+	data = {
+        "name": doc.name,
+        "billing_name": doc.billing_name,
+        "member": doc.member,
+        "amount": doc.amount,
+    }
+	try:
+		response = requests.post(url, json=data)
+		if response.status_code == 200:
+			print("Response:", response.json())
+		else:
+			print(f"POST request failed with status code: {response.text}")
+
+	except Exception as e:
+		print("An error occurred:", e)
+ 
+ 
+ 
+@frappe.whitelist(allow_guest=True)
+def getSalesInvoice(**kwargs):
+	data = list(frappe.form_dict.values())
+ 
+	# Create Customer
+	customer = None
+	exit_customer = frappe.get_value("Customer", filters={"customer_name": data[2]}, fieldname='name')
+	if exit_customer is None:
+		customer = frappe.new_doc('Customer')
+		customer.customer_name = data[2]
+		customer.insert(ignore_permissions=True)
+		customer.submit()
+	
+	print("Customer Update")
+	# Create Sales Invoice
+	new_sales_invoice = frappe.new_doc("Sales Invoice")
+	new_sales_invoice.customer = exit_customer if customer is None else customer.name
+	new_sales_invoice.posting_date = nowdate()
+	new_sales_invoice.set("items", [{"item_code": "Courses", "qty": 1, "rate": data[3]}])
+	new_sales_invoice.status = "Paid"
+	new_sales_invoice.insert(ignore_permissions=True)
+	new_sales_invoice.submit()
+	print("invoice Created")

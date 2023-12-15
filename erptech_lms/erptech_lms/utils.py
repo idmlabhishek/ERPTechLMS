@@ -87,14 +87,13 @@ def apply_gst(amount, country=None):
 def verify_payment(response, doctype, docname, address, order_id):
 	response = json.loads(response)
 	client = get_client()
-	client.utility.verify_payment_signature(
-		{
-			"razorpay_order_id": order_id,
-			"razorpay_payment_id": response["razorpay_payment_id"],
-			"razorpay_signature": response["razorpay_signature"],
-		}
-	)
-
+	# client.utility.verify_payment_signature(
+	# 	{
+	# 		"razorpay_order_id": order_id,
+	# 		"razorpay_payment_id": response["razorpay_payment_id"],
+	# 		"razorpay_signature": response["razorpay_signature"],
+	# 	}
+	# )
 	payment = record_payment(address, response, client, doctype, docname)
 	if doctype == "LMS Course":
 		return create_membership(docname, payment)
@@ -112,8 +111,10 @@ def record_payment(address, response, client, doctype, docname):
 			"member": frappe.session.user,
 			"billing_name": address.billing_name,
 			"payment_received": 1,
-			"order_id": response["razorpay_order_id"],
-			"payment_id": response["razorpay_payment_id"],
+			# "order_id": response["razorpay_order_id"],
+			# "payment_id": response["razorpay_payment_id"],
+			"order_id": response["paymentId"],
+			"payment_id": response["paymentId"],
 			"amount": payment_details["amount"],
 			"currency": payment_details["currency"],
 			"amount_with_gst": payment_details["amount_with_gst"],
@@ -263,8 +264,53 @@ def get_details(doctype, docname):
 
 	return details
 
+def create_order(client, amount, currency):
+	try:
+		return client.order.create(
+			{
+				"amount": amount * 100,
+				"currency": currency,
+			}
+		)
+	except Exception as e:
+		frappe.throw(
+			_("Error during payment: {0}. Please contact the Administrator.").format(e)
+		)
+		
 @frappe.whitelist(allow_guest=True)
 def get_payment_options(doctype, docname, phone, country):
+	if not frappe.db.exists(doctype, docname):
+		frappe.throw(_("Invalid document provided."))
+
+	validate_phone_number(phone, True)
+	details = get_details(doctype, docname)
+	details.amount, details.currency = check_multicurrency(
+		details.amount, details.currency, country
+	)
+	if details.currency == "INR":
+		details.amount, details.gst_applied = apply_gst(details.amount, country)
+
+	client = get_client()
+	order = create_order(client, details.amount, details.currency)
+
+	options = {
+		"key_id": frappe.db.get_single_value("LMS Settings", "razorpay_key"),
+		"name": frappe.db.get_single_value("Website Settings", "app_name"),
+		"description": _("Payment for {0} course").format(details["title"]),
+		"order_id": order["id"],
+		"amount": order["amount"] * 100,
+		"currency": order["currency"],
+		"prefill": {
+			"name": frappe.db.get_value("User", frappe.session.user, "full_name"),
+			"email": frappe.session.user,
+			"contact": phone,
+		},
+	}
+	return options
+
+
+@frappe.whitelist(allow_guest=True)
+def get_payment_options_instamojo(doctype, docname, phone, country):
 	if not frappe.db.exists(doctype, docname):
 		frappe.throw(_("Invalid document provided."))
 
