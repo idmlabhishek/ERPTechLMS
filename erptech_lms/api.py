@@ -178,7 +178,7 @@ def new_enrollment_from_lms(member,payment):
 
 @frappe.whitelist(allow_guest=True)
 def postSalesInvoice(doc, method):
-	url = "http://localhost:8001/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
+	url = "https://idml1.frappe.cloud/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
 	data = {
         "name": doc.name,
         "billing_name": doc.billing_name,
