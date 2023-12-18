@@ -16,7 +16,6 @@ def getSalesInvoice(**kwargs):
 		customer.territory = "India"
 		customer.customer_name = data[2]
 		customer.insert(ignore_permissions=True)
-		# customer.submit()
 	
 	print("Customer Update")
 	# Create Sales Invoice
@@ -25,5 +24,4 @@ def getSalesInvoice(**kwargs):
 	new_sales_invoice.transaction_date = nowdate()
 	new_sales_invoice.set("items", [{"item_code": "Courses", "delivery_date": nowdate(), "qty": 1, "rate": data[3]}])
 	new_sales_invoice.insert(ignore_permissions=True)
-	# new_sales_invoice.submit()
 	print("invoice Created")
