@@ -159,9 +159,6 @@ required_apps = []
 # Overriding Methods
 # ------------------------------
 #
-override_whitelisted_methods = {
-	"lms.lms.utils.get_course_completion_data": "erptech_lms.api.courses_completion_data"
-}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
@@ -219,25 +216,3 @@ override_whitelisted_methods = {
 # auth_hooks = [
 #	"erptech_lms.auth.validate"
 # ]
-website_route_rules = [
-    {"from_route": "/", "to_route": "idmlcourses"},
-    {
-		"from_route": "/enrolling/<module>/<modulename>",
-		"to_route": "enrolling/enrolling",
-	},
-    {
-		"from_route": "/booking/<module>/<modulename>",
-		"to_route": "booking/booking",
-	},
-]
-website_redirects = [
-	{"source": "/", "target": "/idmlcourses"},
-	{"source": "/courses", "target": "/idmlcourses"},
-    {"source": "/edit-profile/(.*)", "target": '/lms-profile/\\1'}
-]
-
-doc_events = {
-    "LMS Payment": {
-        "on_update": "erptech_lms.api.postSalesInvoice"
-    }
-}
