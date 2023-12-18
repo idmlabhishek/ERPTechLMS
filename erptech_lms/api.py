@@ -20,11 +20,10 @@ def getSalesInvoice(**kwargs):
 	
 	print("Customer Update")
 	# Create Sales Invoice
-	new_sales_invoice = frappe.new_doc("Sales Invoice")
+	new_sales_invoice = frappe.new_doc("Sales Order")
 	new_sales_invoice.customer = exit_customer if customer is None else customer.name
-	new_sales_invoice.posting_date = nowdate()
-	new_sales_invoice.set("items", [{"item_code": "Courses", "qty": 1, "rate": data[3]}])
-	new_sales_invoice.status = "Paid"
+	new_sales_invoice.transaction_date = nowdate()
+	new_sales_invoice.set("items", [{"item_code": "Courses", "delivery_date": nowdate(), "qty": 1, "rate": data[3]}])
 	new_sales_invoice.insert(ignore_permissions=True)
 	# new_sales_invoice.submit()
 	print("invoice Created")
