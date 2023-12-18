@@ -12,6 +12,8 @@ def getSalesInvoice(**kwargs):
 	exit_customer = frappe.get_value("Customer", filters={"customer_name": data[2]}, fieldname='name')
 	if exit_customer is None:
 		customer = frappe.new_doc('Customer')
+		customer.customer_group = "Individual"
+		customer.territory = "India"
 		customer.customer_name = data[2]
 		customer.insert(ignore_permissions=True)
 		# customer.submit()
