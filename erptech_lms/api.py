@@ -178,7 +178,7 @@ def new_enrollment_from_lms(member,payment):
 
 @frappe.whitelist(allow_guest=True)
 def postSalesInvoice(doc, method):
-	url = "https://idml1.frappe.cloud/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
+	url = "http://localhost:8001/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
 	data = {
         "name": doc.name,
         "billing_name": doc.billing_name,
@@ -208,7 +208,7 @@ def getSalesInvoice(**kwargs):
 		customer = frappe.new_doc('Customer')
 		customer.customer_name = data[2]
 		customer.insert(ignore_permissions=True)
-		customer.submit()
+		# customer.submit()
 	
 	print("Customer Update")
 	# Create Sales Invoice
@@ -218,5 +218,5 @@ def getSalesInvoice(**kwargs):
 	new_sales_invoice.set("items", [{"item_code": "Courses", "qty": 1, "rate": data[3]}])
 	new_sales_invoice.status = "Paid"
 	new_sales_invoice.insert(ignore_permissions=True)
-	new_sales_invoice.submit()
+	# new_sales_invoice.submit()
 	print("invoice Created")
