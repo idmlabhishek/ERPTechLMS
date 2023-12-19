@@ -176,30 +176,31 @@ def new_enrollment_from_lms(member,payment):
 	return member
 
 
-@frappe.whitelist(allow_guest=True)
-def postSalesInvoice(doc, method):
-	url = "https://idml1.frappe.cloud/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
-	data = {
-        "name": doc.name,
-        "billing_name": doc.billing_name,
-        "member": doc.member,
-        "amount": doc.amount,
-    }
-	try:
-		response = requests.post(url, json=data)
-		if response.status_code == 200:
-			print("Response:", response.json())
-		else:
-			print(f"POST request failed with status code: {response.text}")
+# @frappe.whitelist(allow_guest=True)
+# def postSalesInvoice(doc, method):
+# 	url = "https://idml1.frappe.cloud/api/method/erptech_lms.api.getSalesInvoice"  # Replace with your API endpoint
+# 	data = {
+#         "name": doc.name,
+#         "billing_name": doc.billing_name,
+#         "member": doc.member,
+#         "amount": doc.amount,
+#     }
+# 	try:
+# 		response = requests.post(url, json=data)
+# 		if response.status_code == 200:
+# 			print("Response:", response.json())
+# 		else:
+# 			print(f"POST request failed with status code: {response.text}")
 
-	except Exception as e:
-		print("An error occurred:", e)
- 
+# 	except Exception as e:
+# 		print("An error occurred:", e)
  
  
 @frappe.whitelist(allow_guest=True)
-def getSalesInvoice(**kwargs):
+def create_sales_order(**kwargs):
+	print('new... ')
 	data = list(frappe.form_dict.values())
+	print('data ', data)
  
 	# Create Customer
 	customer = None

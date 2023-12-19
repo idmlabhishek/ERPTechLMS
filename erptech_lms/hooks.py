@@ -236,8 +236,8 @@ website_redirects = [
     {"source": "/edit-profile/(.*)", "target": '/lms-profile/\\1'}
 ]
 
-doc_events = {
-    "LMS Payment": {
-        "on_update": "erptech_lms.api.postSalesInvoice"
-    }
-}
+# doc_events = {
+#     "LMS Payment": {
+#         "on_update": "erptech_lms.api.postSalesInvoice"
+#     }
+# }
