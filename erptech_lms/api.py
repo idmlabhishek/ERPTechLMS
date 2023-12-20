@@ -29,10 +29,9 @@ def create_sales_order(**kwargs):
 	new_sales_order.insert(ignore_permissions=True)
 	print("invoice Created")
  
-	# Create Sales Order
-	# new_sales_order = frappe.new_doc("Sales Order")
-	# new_sales_order.customer = exit_customer if customer is None else customer.name
-	# new_sales_order.transaction_date = nowdate()
-	# new_sales_order.set("items", [{"item_code": "Courses", "delivery_date": nowdate(), "qty": 1, "rate": data[2]}])
-	# new_sales_order.insert(ignore_permissions=True)
-	# print("invoice Created")
+	# Create Payment Entry
+	# new_payment_entry = frappe.new_doc("Payment Entry")
+	# new_payment_entry.customer = exit_customer if customer is None else customer.name
+	# new_payment_entry.transaction_date = nowdate()
+	# new_payment_entry.insert(ignore_permissions=True)
+	# print("Payment Entry Created")
